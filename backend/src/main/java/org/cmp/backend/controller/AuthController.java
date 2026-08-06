@@ -1,5 +1,6 @@
 package org.cmp.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.CreateUserRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor

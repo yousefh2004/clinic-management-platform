@@ -2,7 +2,7 @@ package org.cmp.backend.dto;
 
 import org.cmp.backend.entity.Role;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 public record UserResponse(
@@ -11,8 +11,8 @@ public record UserResponse(
         String email,
         Role role,
         boolean active,
-        OffsetDateTime createdAt,
+        Instant createdAt,
         String createdBy,
-        OffsetDateTime updatedAt,
+        Instant updatedAt,
         String updatedBy
 ) {}
