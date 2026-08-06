@@ -2,6 +2,8 @@ package org.cmp.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.cmp.backend.dto.ErrorResponse;
+import org.cmp.backend.exception.ConflictException;
+import org.cmp.backend.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -71,9 +73,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgument(
-            IllegalArgumentException ex, HttpServletRequest request) {
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> handleConflict(
+            ConflictException ex, HttpServletRequest request) {
 
         ErrorResponse error = new ErrorResponse(
                 "Conflict",
@@ -85,6 +87,22 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(
+            ResourceNotFoundException ex, HttpServletRequest request) {
+
+        ErrorResponse error = new ErrorResponse(
+                "Not found",
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                OffsetDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(Exception.class)
