@@ -6,6 +6,8 @@ import org.cmp.backend.dto.LoginRequest;
 import org.cmp.backend.dto.LoginResponse;
 import org.cmp.backend.dto.UserResponse;
 import org.cmp.backend.entity.User;
+import org.cmp.backend.exception.ConflictException;
+import org.cmp.backend.exception.ResourceNotFoundException;
 import org.cmp.backend.repository.UserRepository;
 import org.cmp.backend.security.JwtUtil;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -62,17 +64,17 @@ public class AuthService {
 
     public UserResponse getCurrentUser(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BadCredentialsException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return toUserResponse(user);
     }
 
     public UserResponse createStaffUser(CreateUserRequest request) {
         if (userRepository.existsByUsername(request.username())) {
-            throw new IllegalArgumentException("Username already taken");
+            throw new ConflictException("Username already taken");
         }
         if (userRepository.existsByEmail(request.email())) {
-            throw new IllegalArgumentException("Email already taken");
+            throw new ConflictException("Email already taken");
         }
 
         User user = new User();
@@ -88,7 +90,7 @@ public class AuthService {
 
     public void deactivateUser(UUID userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setActive(false);
         userRepository.save(user);
     }
