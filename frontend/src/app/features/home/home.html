@@ -1,0 +1,3 @@
+<h1>Welcome, {{ authService.currentUser()?.username }}</h1>
+<p>Role: {{ authService.currentUser()?.role }}</p>
+<button mat-raised-button (click)="authService.logout()">Log out</button>

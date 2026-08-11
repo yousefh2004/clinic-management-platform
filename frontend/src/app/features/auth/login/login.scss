@@ -96,14 +96,14 @@
       font-weight: 700;
       color: #1e293b;
       text-align: center;
-      margin-top: 100px;
+      margin-top: 10px;
     }
 
     .login-form {
       display: flex;
       flex-direction: column;
       gap: 22px;
-      margin-bottom: 80px;
+      margin-bottom: 90px;
       .form-group {
         display: flex;
         flex-direction: column;
@@ -184,6 +184,12 @@
       }
     }
   }
+}
+.icon-image{
+    width: 80px;
+}
+.login-image{
+    margin: auto;
 }
 @keyframes floatSteth {
   0%, 100% {
