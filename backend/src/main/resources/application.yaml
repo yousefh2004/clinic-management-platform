@@ -6,3 +6,23 @@ spring:
     url: jdbc:postgresql://localhost:5433/cmp_db
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    default-property-inclusion: non_null
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    access-token-expiration-ms: 3600000
+    refresh-token-expiration-ms: 604800000
+  admin:
+    default-password: ${ADMIN_DEFAULT_PASSWORD:YousefHajeer}
