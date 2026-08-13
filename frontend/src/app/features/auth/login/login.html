@@ -1,0 +1,48 @@
+<div class="login-page-wrapper">
+  <h1 class="page-title">MedCare Clinic</h1>
+
+  <div class="login-card">
+    <div class="left-panel">
+      <div class="icon-badge">
+        <img src="images/logo.png" alt="MedCare Logo" class="icon-image">
+      </div>
+      <p class="brand-slogan">
+        We at MedCare are always fully focused on your health.
+      </p>
+
+      <div class="illustration-container">
+        <img src="images/steth.webp" alt="MedCare Cardiology & Surgery" class="steth-img floating-animation" />
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <img src="images/loginIcon.jpg" alt="" width="180px" class="login-image">
+      <h2 class="form-heading">Welcome Back</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Username or Email</mat-label>
+          <input matInput formControlName="usernameOrEmail">
+          @if (form.get('usernameOrEmail')?.hasError('required')) {
+            <mat-error>Username or email is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" [errorStateMatcher]="matcher">
+          @if (form.get('password')?.hasError('required')) {
+            <mat-error>Password is required</mat-error>
+          }
+          @if (form.get('password')?.hasError('minlength')) {
+            <mat-error>Password must be at least 6 characters</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="form.invalid">
+          Log in
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
