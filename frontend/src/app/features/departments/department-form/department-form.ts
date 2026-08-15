@@ -1,18 +1,22 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DepartmentService } from '../../../core/services/department.service';
+
+export interface DepartmentFormData {
+  id: string | null;
+}
 
 @Component({
   selector: 'app-department-form',
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule
   ],
   templateUrl: './department-form.html',
   styleUrl: './department-form.scss',
@@ -20,15 +24,15 @@ import { DepartmentService } from '../../../core/services/department.service';
 })
 export class DepartmentForm implements OnInit {
   form: FormGroup;
-  isEditMode = false;
-  departmentId: string | null = null;
+  isEditMode: boolean;
 
   constructor(
     private fb: FormBuilder,
     private departmentService: DepartmentService,
-    private route: ActivatedRoute,
-    private router: Router
+    private dialogRef: MatDialogRef<DepartmentForm>,
+    @Inject(MAT_DIALOG_DATA) public data: DepartmentFormData
   ) {
+    this.isEditMode = !!data.id;
     this.form = this.fb.group({
       name: ['', Validators.required],
       code: ['', Validators.required]
@@ -36,11 +40,8 @@ export class DepartmentForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.departmentId = this.route.snapshot.paramMap.get('id');
-    this.isEditMode = !!this.departmentId;
-
-    if (this.isEditMode && this.departmentId) {
-      this.departmentService.getById(this.departmentId).subscribe((dept) => {
+    if (this.isEditMode && this.data.id) {
+      this.departmentService.getById(this.data.id).subscribe((dept) => {
         this.form.patchValue({ name: dept.name, code: dept.code });
       });
     }
@@ -51,18 +52,18 @@ export class DepartmentForm implements OnInit {
 
     const request = this.form.value;
 
-    if (this.isEditMode && this.departmentId) {
-      this.departmentService.update(this.departmentId, request).subscribe(() => {
-        this.router.navigate(['/departments']);
+    if (this.isEditMode && this.data.id) {
+      this.departmentService.update(this.data.id, request).subscribe(() => {
+        this.dialogRef.close(true);
       });
     } else {
       this.departmentService.create(request).subscribe(() => {
-        this.router.navigate(['/departments']);
+        this.dialogRef.close(true);
       });
     }
   }
 
   onCancel(): void {
-    this.router.navigate(['/departments']);
+    this.dialogRef.close(false);
   }
 }

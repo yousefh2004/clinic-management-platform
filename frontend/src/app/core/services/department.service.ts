@@ -10,11 +10,12 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) {}
 
-  list(name: string, page: number, size: number): Observable<PageResponse<DepartmentResponse>> {
-    let params = new HttpParams().set('page', page).set('size', size);
-    if (name) params = params.set('name', name);
-    return this.http.get<PageResponse<DepartmentResponse>>(this.baseUrl, { params });
-  }
+  list(name: string, page: number, size: number, sort?: string): Observable<PageResponse<DepartmentResponse>> {
+  let params = new HttpParams().set('page', page).set('size', size);
+  if (name) params = params.set('name', name);
+  if (sort) params = params.set('sort', sort);
+  return this.http.get<PageResponse<DepartmentResponse>>(this.baseUrl, { params });
+}
 
   getById(id: string): Observable<DepartmentResponse> {
     return this.http.get<DepartmentResponse>(`${this.baseUrl}/${id}`);
