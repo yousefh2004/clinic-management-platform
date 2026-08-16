@@ -17,5 +17,12 @@ html, body {
   overflow: hidden;
   height: 100%;
   margin: 0;
+  
+}
+
+.themed-dialog .mat-mdc-dialog-surface {
+  border-radius: 28px !important;
+  border-top-left-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
 }
 /* You can add global styles to this file, and also import other style files */
