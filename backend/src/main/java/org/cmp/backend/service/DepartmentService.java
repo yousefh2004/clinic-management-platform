@@ -8,6 +8,7 @@ import org.cmp.backend.entity.Department;
 import org.cmp.backend.exception.ConflictException;
 import org.cmp.backend.exception.ResourceNotFoundException;
 import org.cmp.backend.repository.DepartmentRepository;
+import org.cmp.backend.repository.DoctorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final DoctorRepository doctorRepository;
 
     public PageResponse<DepartmentResponse> list(String name, Pageable pageable) {
         Page<Department> page = (name == null || name.isBlank())
@@ -65,7 +67,9 @@ public class DepartmentService {
 
     public void delete(UUID id) {
         Department department = findEntity(id);
-        // check if department has doctors assigned (to do)
+        if (doctorRepository.existsByDepartmentId(id)) {
+            throw new ConflictException("Cannot delete department with doctors assigned.");
+        }
         departmentRepository.delete(department);
     }
 
