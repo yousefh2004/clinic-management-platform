@@ -4,6 +4,11 @@
   width: 100vw;
   overflow: hidden;
   background-color: #9398bf;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: 100dvh;
+  }
 }
 
 .sidebar {
@@ -16,15 +21,35 @@
   box-sizing: border-box;
   border-radius: 0 30px 30px 0;
 
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 0 0 24px 24px;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
   .brand {
     padding: 0 20px 24px;
     text-align: center;
+
+    @media (max-width: 768px) {
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+
     .brand-name {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 700;
       font-size: 1.1rem;
       color: #1e293b;
       white-space: nowrap;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
   }
 
@@ -34,6 +59,13 @@
     gap: 4px;
     flex: 1;
     padding: 0 12px;
+
+    @media (max-width: 768px) {
+      flex-direction: row;
+      padding: 0;
+      overflow-x: auto;
+      gap: 4px;
+    }
 
     a {
       display: flex;
@@ -45,6 +77,14 @@
       text-decoration: none;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.95rem;
+      white-space: nowrap;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px;
+        font-size: 0.7rem;
+      }
 
       mat-icon {
         color: #94a3b8;
@@ -79,6 +119,15 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.95rem;
     border-radius: 12px;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      flex-shrink: 0;
+
+      span {
+        display: none;
+      }
+    }
 
     &:hover {
       color: #b00020;
