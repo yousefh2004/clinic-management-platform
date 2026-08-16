@@ -1,8 +1,7 @@
 .page-wrapper {
-  min-height: 100vh;
   background-color: #9398bf;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  padding: 30px 40px;
+  padding: 10px 10px;
 }
 
 .page-header {
@@ -11,13 +10,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  .header-logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100px;
-  }
 
   .page-title {
     margin: 0;
@@ -35,7 +27,7 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
 
   width: 100%;
-  max-width: 650px;
+  max-width: 850px;
   min-height: 500px;
   height: auto;
 
@@ -84,7 +76,6 @@
   text-align: center;
 }
 
-/* Header */
 .department-table .mat-mdc-header-cell {
   background: #a4a9d6;
   color: #ffffff;

@@ -1,0 +1,95 @@
+.shell {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #9398bf;
+}
+
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  box-sizing: border-box;
+  border-radius: 0 30px 30px 0;
+
+  .brand {
+    padding: 0 20px 24px;
+    text-align: center;
+    .brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e293b;
+      white-space: nowrap;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    padding: 0 12px;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: #64748b;
+      text-decoration: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+
+      mat-icon {
+        color: #94a3b8;
+      }
+
+      &.active {
+        background-color: #f1f2fa;
+        color: #5D62D5;
+        font-weight: 600;
+
+        mat-icon {
+          color: #5D62D5;
+        }
+      }
+
+      &:hover:not(.active) {
+        background-color: #f8f9fc;
+      }
+    }
+  }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 20px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 12px;
+
+    &:hover {
+      color: #b00020;
+      background-color: #fdf2f2;
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #9398bf;
+}
