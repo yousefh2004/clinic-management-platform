@@ -17,6 +17,10 @@ export class DepartmentService {
   return this.http.get<PageResponse<DepartmentResponse>>(this.baseUrl, { params });
 }
 
+  listAll(): Observable<PageResponse<DepartmentResponse>> {
+  return this.list('', 0, 100);
+}
+
   getById(id: string): Observable<DepartmentResponse> {
     return this.http.get<DepartmentResponse>(`${this.baseUrl}/${id}`);
   }
