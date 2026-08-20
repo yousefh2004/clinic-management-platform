@@ -3,6 +3,7 @@ import { Login } from './features/auth/login/login';
 import { MainLayout } from './shared/main-layout/main-layout';
 import { DepartmentList } from './features/departments/department-list/department-list';
 import { roleGuard } from './core/guards/role.guard';
+import { DoctorList } from './features/doctors/doctor-list/doctor-list';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -13,6 +14,7 @@ export const routes: Routes = [
     children: [
       { path: 'departments', component: DepartmentList },
       { path: '', redirectTo: 'departments', pathMatch: 'full' },
+      { path: 'doctors', component: DoctorList },
     ]
   },
 ];

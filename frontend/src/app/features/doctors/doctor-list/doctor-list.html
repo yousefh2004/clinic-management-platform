@@ -1,0 +1,83 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1 class="page-title">Doctors</h1>
+  </div>
+
+  <div class="content-card">
+    <div class="toolbar">
+      <mat-form-field appearance="fill" class="search-field">
+        <mat-label>Search by name</mat-label>
+        <input matInput [formControl]="searchControl">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="department-filter">
+        <mat-label>Department</mat-label>
+        <mat-select [(ngModel)]="selectedDepartmentId" (selectionChange)="onDepartmentFilterChange()">
+          <mat-option [value]="null">All departments</mat-option>
+          @for (dept of departments(); track dept.id) {
+            <mat-option [value]="dept.id">{{ dept.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="add-btn" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Add Doctor
+      </button>
+    </div>
+
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="doctors()" matSort (matSortChange)="onSortChange($event)" class="doctor-table">
+        <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="firstName">Name</th>
+        <td mat-cell *matCellDef="let doc">Dr. {{ doc.firstName }} {{ doc.lastName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let doc">{{ doc.departmentName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="specialty">
+          <th mat-header-cell *matHeaderCellDef>Specialty</th>
+          <td mat-cell *matCellDef="let doc">{{ doc.specialty || '—' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let doc">
+            <span class="status-badge" [class.active]="doc.active" [class.inactive]="!doc.active">
+              {{ doc.active ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let doc">
+            <button mat-icon-button (click)="openEditDialog(doc.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            @if (doc.active) {
+              <button mat-icon-button (click)="confirmDeactivate(doc)">
+                <mat-icon>block</mat-icon>
+              </button>
+            }
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator
+      [length]="totalElements()"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [hidePageSize]="true"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+</div>

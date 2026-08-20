@@ -12,6 +12,7 @@ import org.cmp.backend.repository.DepartmentRepository;
 import org.cmp.backend.repository.DoctorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -24,8 +25,19 @@ public class DoctorService {
     private final DepartmentRepository departmentRepository;
 
     public PageResponse<DoctorResponse> list(String name, UUID departmentId, Boolean active, Pageable pageable) {
-        Page<Doctor> page = doctorRepository.search(name, departmentId, active, pageable);
-
+        Specification<Doctor> spec = Specification.unrestricted();
+        if (name != null && !name.isBlank()) {
+            String pattern = "%" + name.toLowerCase() + "%";
+            spec = spec.and((root, query, cb) ->
+                    cb.like(cb.lower(cb.concat(cb.concat(root.get("firstName"), " "), root.get("lastName"))), pattern));
+        }
+        if (departmentId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("department").get("id"), departmentId));
+        }
+        if (active != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("active"), active));
+        }
+        Page<Doctor> page = doctorRepository.findAll(spec, pageable);
         return new PageResponse<>(
                 page.getContent().stream().map(this::toResponse).toList(),
                 page.getTotalElements(),
