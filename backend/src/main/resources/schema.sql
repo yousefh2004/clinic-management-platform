@@ -35,3 +35,19 @@ CREATE TABLE IF NOT EXISTS doctors (
     updated_at    TIMESTAMPTZ  NOT NULL,
     updated_by    VARCHAR(100) NOT NULL
     );
+
+CREATE TABLE IF NOT EXISTS patients (
+    id             UUID PRIMARY KEY,
+    first_name     VARCHAR(255) NOT NULL,
+    last_name      VARCHAR(255) NOT NULL,
+    date_of_birth  DATE         NOT NULL,
+    gender         VARCHAR(50)  NOT NULL,
+    phone_number   VARCHAR(50)  NOT NULL UNIQUE,
+    email          VARCHAR(255) UNIQUE,
+    address        VARCHAR(500),
+    active         BOOLEAN      NOT NULL DEFAULT TRUE,
+    created_at     TIMESTAMPTZ  NOT NULL,
+    created_by     VARCHAR(100) NOT NULL,
+    updated_at     TIMESTAMPTZ  NOT NULL,
+    updated_by     VARCHAR(100) NOT NULL
+    );
