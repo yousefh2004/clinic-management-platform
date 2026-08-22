@@ -13,6 +13,7 @@ import { debounceTime } from 'rxjs';
 import { PatientService } from '../../../core/services/patient.service';
 import { PatientResponse } from '../../../core/models/patient.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
+import { PatientForm, PatientFormData } from '../patient-form/patient-form';
 
 @Component({
   selector: 'app-patient-list',
@@ -90,6 +91,29 @@ export class PatientList implements OnInit {
     this.load();
   }
 
+  openCreateDialog(): void {
+    const ref = this.dialog.open(PatientForm, {
+      width: '520px',
+      panelClass: 'themed-dialog',
+      data: { id: null } as PatientFormData
+    });
+
+    ref.afterClosed().subscribe((saved) => {
+      if (saved) this.load();
+    });
+  }
+
+  openEditDialog(id: string): void {
+    const ref = this.dialog.open(PatientForm, {
+      width: '520px',
+      panelClass: 'themed-dialog',
+      data: { id } as PatientFormData
+    });
+
+    ref.afterClosed().subscribe((saved) => {
+      if (saved) this.load();
+    });
+  }
 
   confirmDeactivate(patient: PatientResponse): void {
     const ref = this.dialog.open(ConfirmDialog, {
