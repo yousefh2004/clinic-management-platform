@@ -51,3 +51,19 @@ CREATE TABLE IF NOT EXISTS patients (
     updated_at     TIMESTAMPTZ  NOT NULL,
     updated_by     VARCHAR(100) NOT NULL
     );
+
+CREATE TABLE IF NOT EXISTS appointments (
+    id                    UUID PRIMARY KEY,
+    doctor_id             UUID         NOT NULL REFERENCES doctors(id),
+    patient_id            UUID         NOT NULL REFERENCES patients(id),
+    appointment_datetime  TIMESTAMPTZ  NOT NULL,
+    status                VARCHAR(20)  NOT NULL,
+    created_at            TIMESTAMPTZ  NOT NULL,
+    created_by            VARCHAR(100) NOT NULL,
+    updated_at            TIMESTAMPTZ  NOT NULL,
+    updated_by            VARCHAR(100) NOT NULL
+    );
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_doctor_slot
+    ON appointments (doctor_id, appointment_datetime)
+    WHERE status <> 'CANCELLED';
