@@ -2,6 +2,7 @@ package org.cmp.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.cmp.backend.dto.ErrorResponse;
+import org.cmp.backend.exception.BadRequestException;
 import org.cmp.backend.exception.ConflictException;
 import org.cmp.backend.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -103,6 +104,22 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(
+            BadRequestException ex, HttpServletRequest request) {
+
+        ErrorResponse error = new ErrorResponse(
+                "Bad request",
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                OffsetDateTime.now(),
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(Exception.class)
