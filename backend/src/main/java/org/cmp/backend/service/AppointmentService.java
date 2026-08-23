@@ -8,6 +8,7 @@ import org.cmp.backend.entity.Appointment;
 import org.cmp.backend.entity.AppointmentStatus;
 import org.cmp.backend.entity.Doctor;
 import org.cmp.backend.entity.Patient;
+import org.cmp.backend.exception.BadRequestException;
 import org.cmp.backend.exception.ConflictException;
 import org.cmp.backend.exception.ResourceNotFoundException;
 import org.cmp.backend.repository.AppointmentRepository;
@@ -135,7 +136,7 @@ public class AppointmentService {
 
     private void validateFutureDate(OffsetDateTime dateTime) {
         if (!dateTime.isAfter(OffsetDateTime.now())) {
-            throw new IllegalArgumentException("Appointment date and time must be in the future.");
+            throw new BadRequestException("Appointment date and time must be in the future.");
         }
     }
 
@@ -163,7 +164,7 @@ public class AppointmentService {
         Doctor doctor = doctorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found: " + id));
         if (!doctor.isActive()) {
-            throw new IllegalArgumentException("Cannot book an appointment with an inactive doctor.");
+            throw new BadRequestException("Cannot book an appointment with an inactive doctor.");
         }
         return doctor;
     }
@@ -172,7 +173,7 @@ public class AppointmentService {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient not found: " + id));
         if (!patient.isActive()) {
-            throw new IllegalArgumentException("Cannot book an appointment with an inactive patient.");
+            throw new BadRequestException("Cannot book an appointment with an inactive patient.");
         }
         return patient;
     }
