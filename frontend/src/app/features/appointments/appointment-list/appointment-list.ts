@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AppointmentService } from '../../../core/services/appointment.service';
 import { AppointmentResponse, AppointmentStatus } from '../../../core/models/appointment.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
+import { AppointmentForm, AppointmentFormData } from '../appointment-form/appointment-form';
 
 @Component({
   selector: 'app-appointment-list',
@@ -85,6 +86,30 @@ export class AppointmentList implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.load();
+  }
+
+  openCreateDialog(): void {
+    const ref = this.dialog.open(AppointmentForm, {
+      width: '560px',
+      panelClass: 'themed-dialog',
+      data: { id: null } as AppointmentFormData
+    });
+
+    ref.afterClosed().subscribe((saved) => {
+      if (saved) this.load();
+    });
+  }
+
+  openEditDialog(id: string): void {
+    const ref = this.dialog.open(AppointmentForm, {
+      width: '560px',
+      panelClass: 'themed-dialog',
+      data: { id } as AppointmentFormData
+    });
+
+    ref.afterClosed().subscribe((saved) => {
+      if (saved) this.load();
+    });
   }
 
   confirmCancel(appointment: AppointmentResponse): void {

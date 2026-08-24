@@ -1,0 +1,56 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit Appointment' : 'Book Appointment' }}</h2>
+</div>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="appointment-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Doctor</mat-label>
+      <input matInput [formControl]="doctorSearchControl" [matAutocomplete]="doctorAuto" placeholder="Search by name">
+      <mat-autocomplete #doctorAuto="matAutocomplete" [displayWith]="displayDoctor" (optionSelected)="onDoctorSelected($event.option.value)">
+        @for (doc of doctorOptions; track doc.id) {
+          <mat-option [value]="doc">Dr. {{ doc.firstName }} {{ doc.lastName }} — {{ doc.departmentName }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Patient</mat-label>
+      <input matInput [formControl]="patientSearchControl" [matAutocomplete]="patientAuto" placeholder="Search by name">
+      <mat-autocomplete #patientAuto="matAutocomplete" [displayWith]="displayPatient" (optionSelected)="onPatientSelected($event.option.value)">
+        @for (p of patientOptions; track p.id) {
+          <mat-option [value]="p">{{ p.firstName }} {{ p.lastName }} — {{ p.phoneNumber }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="apptPicker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="apptPicker"></mat-datepicker-toggle>
+        <mat-datepicker #apptPicker></mat-datepicker>
+        @if (form.get('date')?.hasError('required')) {
+          <mat-error>Date is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Time</mat-label>
+        <input matInput type="time" formControlName="time">
+        @if (form.get('time')?.hasError('required')) {
+          <mat-error>Time is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" class="save-btn"
+          [disabled]="form.invalid || !selectedDoctorId || !selectedPatientId"
+          (click)="onSubmit()">
+    {{ isEditMode ? 'Save Changes' : 'Book' }}
+  </button>
+</mat-dialog-actions>

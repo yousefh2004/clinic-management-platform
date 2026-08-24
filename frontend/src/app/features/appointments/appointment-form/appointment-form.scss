@@ -1,0 +1,62 @@
+.dialog-header {
+  padding: 24px 24px 0;
+
+  h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+}
+
+mat-dialog-content {
+  padding: 0 24px;
+  max-height: 70vh;
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+
+    .half-width {
+      flex: 1;
+    }
+  }
+
+  .full-width,
+  .half-width {
+    .mat-mdc-text-field-wrapper {
+      background-color: transparent !important;
+      padding: 0 !important;
+    }
+
+    .mdc-line-ripple::before {
+      border-bottom-color: #e2e8f0;
+    }
+
+    .mdc-line-ripple::after {
+      border-bottom-color: #5D62D5;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding-top: 24px;
+      padding-bottom: 8px;
+    }
+  }
+}
+
+.save-btn {
+  background-color: #5D62D5 !important;
+  color: #ffffff !important;
+  border-radius: 24px;
+
+  &:hover {
+    background-color: #4b50c0 !important;
+  }
+}
