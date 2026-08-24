@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DoctorRequest, DoctorResponse } from '../models/doctor.model';
 import { PageResponse } from '../models/department.model';
@@ -42,4 +42,8 @@ export class DoctorService {
   deactivate(id: string): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
+
+  searchByName(name: string): Observable<DoctorResponse[]> {
+  return this.list(name, null, true, 0, 10).pipe(map((res) => res.content));
+}
 }
