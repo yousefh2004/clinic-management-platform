@@ -5,6 +5,7 @@ import { DepartmentList } from './features/departments/department-list/departmen
 import { roleGuard } from './core/guards/role.guard';
 import { DoctorList } from './features/doctors/doctor-list/doctor-list';
 import { PatientList } from './features/patients/patient-list/patient-list';
+import { AppointmentList } from './features/appointments/appointment-list/appointment-list';
 
 export const routes: Routes = [
   { path: 'login', component: Login },
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'departments', pathMatch: 'full' },
       { path: 'doctors', component: DoctorList },
       { path: 'patients', component: PatientList },
+      { path: 'appointments', component: AppointmentList },
     ]
   },
 ];
