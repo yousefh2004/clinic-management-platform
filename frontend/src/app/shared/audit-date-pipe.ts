@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, inject } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Pipe({
@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
   standalone: true
 })
 export class AuditDatePipe implements PipeTransform {
-  private datePipe = inject(DatePipe);
+  private datePipe = new DatePipe('en-US');
 
   transform(value: string | null | undefined): string {
     if (!value) return '—';
