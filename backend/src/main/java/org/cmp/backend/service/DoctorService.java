@@ -3,6 +3,7 @@ package org.cmp.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.DoctorRequest;
 import org.cmp.backend.dto.DoctorResponse;
+import org.cmp.backend.dto.DoctorSummaryResponse;
 import org.cmp.backend.dto.PageResponse;
 import org.cmp.backend.entity.Department;
 import org.cmp.backend.entity.Doctor;
@@ -24,8 +25,9 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DepartmentRepository departmentRepository;
 
-    public PageResponse<DoctorResponse> list(String name, UUID departmentId, Boolean active, Pageable pageable) {
+    public PageResponse<DoctorSummaryResponse> list(String name, UUID departmentId, Boolean active, Pageable pageable) {
         Specification<Doctor> spec = Specification.unrestricted();
+
         if (name != null && !name.isBlank()) {
             String pattern = "%" + name.toLowerCase() + "%";
             spec = spec.and((root, query, cb) ->
@@ -37,9 +39,11 @@ public class DoctorService {
         if (active != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("active"), active));
         }
+
         Page<Doctor> page = doctorRepository.findAll(spec, pageable);
+
         return new PageResponse<>(
-                page.getContent().stream().map(this::toResponse).toList(),
+                page.getContent().stream().map(this::toSummaryResponse).toList(),
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumber(),
@@ -111,6 +115,13 @@ public class DoctorService {
                 d.getId(), d.getFirstName(), d.getLastName(), d.getEmail(), d.getPhoneNumber(),
                 d.getDepartment().getId(), d.getDepartment().getName(), d.getSpecialty(), d.isActive(),
                 d.getCreatedAt(), d.getCreatedBy(), d.getUpdatedAt(), d.getUpdatedBy()
+        );
+    }
+
+    private DoctorSummaryResponse toSummaryResponse(Doctor d) {
+        return new DoctorSummaryResponse(
+                d.getId(), d.getFirstName(), d.getLastName(),
+                d.getDepartment().getName(), d.getSpecialty(), d.isActive()
         );
     }
 }

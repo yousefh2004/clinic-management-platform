@@ -60,3 +60,15 @@ mat-dialog-content {
     background-color: #4b50c0 !important;
   }
 }
+
+.audit-info {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+
+  p {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin: 2px 0;
+  }
+}

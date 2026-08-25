@@ -9,6 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { DoctorService } from '../../../core/services/doctor.service';
 import { DepartmentService } from '../../../core/services/department.service';
 import { DepartmentResponse } from '../../../core/models/department.model';
+import { DoctorResponse } from '../../../core/models/doctor.model';
+import { AuditDatePipe } from '../../../shared/audit-date-pipe';
 
 export interface DoctorFormData {
   id: string | null;
@@ -19,7 +21,8 @@ export interface DoctorFormData {
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatDialogModule
+    MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatDialogModule,
+    AuditDatePipe
   ],
   templateUrl: './doctor-form.html',
   styleUrl: './doctor-form.scss',
@@ -29,6 +32,7 @@ export class DoctorForm implements OnInit {
   form: FormGroup;
   isEditMode: boolean;
   departments = signal<DepartmentResponse[]>([]);
+  doctor: DoctorResponse | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +59,7 @@ export class DoctorForm implements OnInit {
 
     if (this.isEditMode && this.data.id) {
       this.doctorService.getById(this.data.id).subscribe((doc) => {
+        this.doctor = doc;
         this.form.patchValue({
           firstName: doc.firstName,
           lastName: doc.lastName,

@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { debounceTime } from 'rxjs';
 import { PatientService } from '../../../core/services/patient.service';
-import { PatientResponse } from '../../../core/models/patient.model';
+import { PatientSummary } from '../../../core/models/patient.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { PatientForm, PatientFormData } from '../patient-form/patient-form';
 
@@ -35,7 +35,7 @@ import { PatientForm, PatientFormData } from '../patient-form/patient-form';
 })
 export class PatientList implements OnInit {
   displayedColumns = ['name', 'phone', 'email', 'status', 'actions'];
-  patients = signal<PatientResponse[]>([]);
+  patients = signal<PatientSummary[]>([]);
   totalElements = signal(0);
   pageSize = 5;
   pageIndex = 0;
@@ -115,7 +115,7 @@ export class PatientList implements OnInit {
     });
   }
 
-  confirmDeactivate(patient: PatientResponse): void {
+  confirmDeactivate(patient: PatientSummary): void {
     const ref = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Deactivate patient',

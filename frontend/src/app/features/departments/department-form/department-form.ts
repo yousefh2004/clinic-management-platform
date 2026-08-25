@@ -6,18 +6,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DepartmentService } from '../../../core/services/department.service';
+import { DepartmentResponse } from '../../../core/models/department.model';
+import { AuditDatePipe } from '../../../shared/audit-date-pipe';
 
 export interface DepartmentFormData {
   id: string | null;
 }
 
+
 @Component({
   selector: 'app-department-form',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule
-  ],
+  CommonModule, ReactiveFormsModule,
+  MatFormFieldModule, MatInputModule, MatButtonModule, MatDialogModule,
+  AuditDatePipe
+],
   templateUrl: './department-form.html',
   styleUrl: './department-form.scss',
   encapsulation: ViewEncapsulation.None
@@ -25,6 +29,7 @@ export interface DepartmentFormData {
 export class DepartmentForm implements OnInit {
   form: FormGroup;
   isEditMode: boolean;
+  department: DepartmentResponse | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +47,7 @@ export class DepartmentForm implements OnInit {
   ngOnInit(): void {
     if (this.isEditMode && this.data.id) {
       this.departmentService.getById(this.data.id).subscribe((dept) => {
+        this.department = dept;
         this.form.patchValue({ name: dept.name, code: dept.code });
       });
     }

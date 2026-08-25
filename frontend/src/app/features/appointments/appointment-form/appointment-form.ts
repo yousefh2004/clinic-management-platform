@@ -12,8 +12,10 @@ import { debounceTime, switchMap } from 'rxjs';
 import { AppointmentService } from '../../../core/services/appointment.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { PatientService } from '../../../core/services/patient.service';
-import { DoctorResponse } from '../../../core/models/doctor.model';
-import { PatientResponse } from '../../../core/models/patient.model';
+import { DoctorSummary } from '../../../core/models/doctor.model';
+import { PatientSummary } from '../../../core/models/patient.model';
+import { AppointmentResponse } from '../../../core/models/appointment.model';
+import { AuditDatePipe } from '../../../shared/audit-date-pipe';
 
 export interface AppointmentFormData {
   id: string | null;
@@ -25,7 +27,7 @@ export interface AppointmentFormData {
   imports: [
     CommonModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule, MatButtonModule,
-    MatAutocompleteModule, MatDatepickerModule, MatDialogModule
+    MatAutocompleteModule, MatDatepickerModule, MatDialogModule, AuditDatePipe
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './appointment-form.html',
@@ -35,11 +37,12 @@ export interface AppointmentFormData {
 export class AppointmentForm implements OnInit {
   form: FormGroup;
   isEditMode: boolean;
+  appointment: AppointmentResponse | null = null;
 
   doctorSearchControl = new FormControl('');
   patientSearchControl = new FormControl('');
-  doctorOptions: DoctorResponse[] = [];
-  patientOptions: PatientResponse[] = [];
+  doctorOptions: DoctorSummary[] = [];
+  patientOptions: PatientSummary[] = [];
 
   selectedDoctorId: string | null = null;
   selectedPatientId: string | null = null;
@@ -72,6 +75,7 @@ export class AppointmentForm implements OnInit {
 
     if (this.isEditMode && this.data.id) {
       this.appointmentService.getById(this.data.id).subscribe((appt) => {
+        this.appointment = appt;
         this.selectedDoctorId = appt.doctorId;
         this.selectedPatientId = appt.patientId;
         this.doctorSearchControl.setValue('Dr. ' + appt.doctorName, { emitEvent: false });
@@ -86,19 +90,22 @@ export class AppointmentForm implements OnInit {
     }
   }
 
-  displayDoctor(doctor: DoctorResponse): string {
-    return doctor ? `Dr. ${doctor.firstName} ${doctor.lastName}` : '';
-  }
+  displayDoctor(doctor: DoctorSummary | string): string {
+  console.log('displayDoctor received:', doctor);
+  if (typeof doctor === 'string') return doctor;
+  return doctor ? `Dr. ${doctor.firstName} ${doctor.lastName}` : '';
+}
 
-  displayPatient(patient: PatientResponse): string {
-    return patient ? `${patient.firstName} ${patient.lastName}` : '';
-  }
+  displayPatient(patient: PatientSummary | string): string {
+  if (typeof patient === 'string') return patient;
+  return patient ? `${patient.firstName} ${patient.lastName}` : '';
+}
 
-  onDoctorSelected(doctor: DoctorResponse): void {
+  onDoctorSelected(doctor: DoctorSummary): void {
     this.selectedDoctorId = doctor.id;
   }
 
-  onPatientSelected(patient: PatientResponse): void {
+  onPatientSelected(patient: PatientSummary): void {
     this.selectedPatientId = patient.id;
   }
 

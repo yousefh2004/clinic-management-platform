@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.PatientRequest;
 import org.cmp.backend.dto.PatientResponse;
 import org.cmp.backend.dto.PageResponse;
+import org.cmp.backend.dto.PatientSummaryResponse;
 import org.cmp.backend.entity.Patient;
 import org.cmp.backend.exception.ConflictException;
 import org.cmp.backend.exception.ResourceNotFoundException;
@@ -21,7 +22,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
 
-    public PageResponse<PatientResponse> list(String name, String phoneNumber, Boolean active, Pageable pageable) {
+    public PageResponse<PatientSummaryResponse> list(String name, String phoneNumber, Boolean active, Pageable pageable) {
         Specification<Patient> spec = Specification.unrestricted();
         if (name != null && !name.isBlank()) {
             String pattern = "%" + name.toLowerCase() + "%";
@@ -36,7 +37,7 @@ public class PatientService {
         }
         Page<Patient> page = patientRepository.findAll(spec, pageable);
         return new PageResponse<>(
-                page.getContent().stream().map(this::toResponse).toList(),
+                page.getContent().stream().map(this::toSummaryResponse).toList(),
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumber(),
@@ -106,6 +107,12 @@ public class PatientService {
                 p.getId(), p.getFirstName(), p.getLastName(), p.getDateOfBirth(), p.getGender(),
                 p.getPhoneNumber(), p.getEmail(), p.getAddress(), p.isActive(),
                 p.getCreatedAt(), p.getCreatedBy(), p.getUpdatedAt(), p.getUpdatedBy()
+        );
+    }
+
+    private PatientSummaryResponse toSummaryResponse(Patient p) {
+        return new PatientSummaryResponse(
+                p.getId(), p.getFirstName(), p.getLastName(), p.getPhoneNumber(), p.getEmail(), p.isActive()
         );
     }
 }

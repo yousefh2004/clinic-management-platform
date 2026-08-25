@@ -66,6 +66,12 @@
       <input matInput formControlName="address">
     </mat-form-field>
   </form>
+  @if (isEditMode && patient) {
+  <div class="audit-info">
+    <p>Created by {{ patient.createdBy }} on {{ patient.createdAt | auditDate }}</p>
+    <p>Last updated by {{ patient.updatedBy }} on {{ patient.updatedAt | auditDate }}</p>
+  </div>
+}
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
