@@ -12,7 +12,7 @@ import { debounceTime, switchMap } from 'rxjs';
 import { AppointmentService } from '../../../core/services/appointment.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { PatientService } from '../../../core/services/patient.service';
-import { DoctorResponse } from '../../../core/models/doctor.model';
+import { DoctorSummary } from '../../../core/models/doctor.model';
 import { PatientResponse } from '../../../core/models/patient.model';
 
 export interface AppointmentFormData {
@@ -38,7 +38,7 @@ export class AppointmentForm implements OnInit {
 
   doctorSearchControl = new FormControl('');
   patientSearchControl = new FormControl('');
-  doctorOptions: DoctorResponse[] = [];
+  doctorOptions: DoctorSummary[] = [];
   patientOptions: PatientResponse[] = [];
 
   selectedDoctorId: string | null = null;
@@ -86,7 +86,7 @@ export class AppointmentForm implements OnInit {
     }
   }
 
-  displayDoctor(doctor: DoctorResponse): string {
+  displayDoctor(doctor: DoctorSummary): string {
     return doctor ? `Dr. ${doctor.firstName} ${doctor.lastName}` : '';
   }
 
@@ -94,7 +94,7 @@ export class AppointmentForm implements OnInit {
     return patient ? `${patient.firstName} ${patient.lastName}` : '';
   }
 
-  onDoctorSelected(doctor: DoctorResponse): void {
+  onDoctorSelected(doctor: DoctorSummary): void {
     this.selectedDoctorId = doctor.id;
   }
 

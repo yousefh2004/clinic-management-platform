@@ -13,7 +13,7 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { debounceTime } from 'rxjs';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { DepartmentService } from '../../../core/services/department.service';
-import { DoctorResponse } from '../../../core/models/doctor.model';
+import { DoctorSummary } from '../../../core/models/doctor.model';
 import { DepartmentResponse } from '../../../core/models/department.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { DoctorForm, DoctorFormData } from '../doctor-form/doctor-form';
@@ -40,7 +40,7 @@ import { DoctorForm, DoctorFormData } from '../doctor-form/doctor-form';
 })
 export class DoctorList implements OnInit {
   displayedColumns = ['name', 'department', 'specialty', 'status', 'actions'];
-  doctors = signal<DoctorResponse[]>([]);
+  doctors = signal<DoctorSummary[]>([]);
   departments = signal<DepartmentResponse[]>([]);
   totalElements = signal(0);
   pageSize = 5;
@@ -125,7 +125,7 @@ export class DoctorList implements OnInit {
     });
   }
 
-  confirmDeactivate(doctor: DoctorResponse): void {
+  confirmDeactivate(doctor: DoctorSummary): void {
     const ref = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Deactivate doctor',

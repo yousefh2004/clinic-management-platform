@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { DoctorRequest, DoctorResponse } from '../models/doctor.model';
+import { DoctorRequest, DoctorResponse, DoctorSummary } from '../models/doctor.model';
 import { PageResponse } from '../models/department.model';
 
 @Injectable({ providedIn: 'root' })
@@ -12,20 +12,20 @@ export class DoctorService {
   constructor(private http: HttpClient) {}
 
   list(
-    name: string,
-    departmentId: string | null,
-    active: boolean | null,
-    page: number,
-    size: number,
-    sort?: string
-  ): Observable<PageResponse<DoctorResponse>> {
-    let params = new HttpParams().set('page', page).set('size', size);
-    if (name) params = params.set('name', name);
-    if (departmentId) params = params.set('departmentId', departmentId);
-    if (active !== null) params = params.set('active', active);
-    if (sort) params = params.set('sort', sort);
-    return this.http.get<PageResponse<DoctorResponse>>(this.baseUrl, { params });
-  }
+  name: string,
+  departmentId: string | null,
+  active: boolean | null,
+  page: number,
+  size: number,
+  sort?: string
+): Observable<PageResponse<DoctorSummary>> {
+  let params = new HttpParams().set('page', page).set('size', size);
+  if (name) params = params.set('name', name);
+  if (departmentId) params = params.set('departmentId', departmentId);
+  if (active !== null) params = params.set('active', active);
+  if (sort) params = params.set('sort', sort);
+  return this.http.get<PageResponse<DoctorSummary>>(this.baseUrl, { params });
+}
 
   getById(id: string): Observable<DoctorResponse> {
     return this.http.get<DoctorResponse>(`${this.baseUrl}/${id}`);
@@ -43,7 +43,7 @@ export class DoctorService {
     return this.http.patch<void>(`${this.baseUrl}/${id}/deactivate`, {});
   }
 
-  searchByName(name: string): Observable<DoctorResponse[]> {
+  searchByName(name: string): Observable<DoctorSummary[]> {
   return this.list(name, null, true, 0, 10).pipe(map((res) => res.content));
 }
 }

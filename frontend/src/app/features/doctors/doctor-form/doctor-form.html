@@ -58,6 +58,12 @@
       <input matInput formControlName="specialty">
     </mat-form-field>
   </form>
+  @if (isEditMode && doctor) {
+  <div class="audit-info">
+    <p>Created by {{ doctor.createdBy }} on {{ doctor.createdAt | auditDate }}</p>
+    <p>Last updated by {{ doctor.updatedBy }} on {{ doctor.updatedAt | auditDate }}</p>
+  </div>
+}
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
