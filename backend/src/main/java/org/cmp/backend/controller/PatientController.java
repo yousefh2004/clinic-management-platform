@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.PatientRequest;
 import org.cmp.backend.dto.PatientResponse;
 import org.cmp.backend.dto.PageResponse;
+import org.cmp.backend.dto.PatientSummaryResponse;
 import org.cmp.backend.service.PatientService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class PatientController {
     private final PatientService patientService;
 
     @GetMapping
-    public ResponseEntity<PageResponse<PatientResponse>> list(
+    public ResponseEntity<PageResponse<PatientSummaryResponse>> list(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phoneNumber,
             @RequestParam(required = false) Boolean active,
