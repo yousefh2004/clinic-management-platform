@@ -3,6 +3,7 @@ package org.cmp.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.AppointmentRequest;
 import org.cmp.backend.dto.AppointmentResponse;
+import org.cmp.backend.dto.AppointmentSummaryResponse;
 import org.cmp.backend.dto.PageResponse;
 import org.cmp.backend.entity.Appointment;
 import org.cmp.backend.entity.AppointmentStatus;
@@ -32,12 +33,10 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
-    public PageResponse<AppointmentResponse> list(
+    public PageResponse<AppointmentSummaryResponse> list(
             UUID doctorId, UUID patientId, OffsetDateTime fromDate, OffsetDateTime toDate,
             AppointmentStatus status, Pageable pageable) {
-
         Specification<Appointment> spec = Specification.unrestricted();
-
         if (doctorId != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("doctor").get("id"), doctorId));
         }
@@ -53,11 +52,9 @@ public class AppointmentService {
         if (status != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("status"), status));
         }
-
         Page<Appointment> page = appointmentRepository.findAll(spec, pageable);
-
         return new PageResponse<>(
-                page.getContent().stream().map(this::toResponse).toList(),
+                page.getContent().stream().map(this::toSummaryResponse).toList(),
                 page.getTotalElements(),
                 page.getTotalPages(),
                 page.getNumber(),
@@ -193,6 +190,16 @@ public class AppointmentService {
                 a.getAppointmentDateTime(),
                 a.getStatus(),
                 a.getCreatedAt(), a.getCreatedBy(), a.getUpdatedAt(), a.getUpdatedBy()
+        );
+    }
+
+    private AppointmentSummaryResponse toSummaryResponse(Appointment a) {
+        return new AppointmentSummaryResponse(
+                a.getId(),
+                a.getDoctor().getFirstName() + " " + a.getDoctor().getLastName(),
+                a.getPatient().getFirstName() + " " + a.getPatient().getLastName(),
+                a.getAppointmentDateTime(),
+                a.getStatus()
         );
     }
 }

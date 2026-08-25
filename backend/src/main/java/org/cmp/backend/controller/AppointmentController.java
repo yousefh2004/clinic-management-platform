@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.AppointmentRequest;
 import org.cmp.backend.dto.AppointmentResponse;
+import org.cmp.backend.dto.AppointmentSummaryResponse;
 import org.cmp.backend.dto.PageResponse;
 import org.cmp.backend.entity.AppointmentStatus;
 import org.cmp.backend.service.AppointmentService;
@@ -24,7 +25,7 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
 
     @GetMapping
-    public ResponseEntity<PageResponse<AppointmentResponse>> list(
+    public ResponseEntity<PageResponse<AppointmentSummaryResponse>> list(
             @RequestParam(required = false) UUID doctorId,
             @RequestParam(required = false) UUID patientId,
             @RequestParam(required = false) OffsetDateTime fromDate,
