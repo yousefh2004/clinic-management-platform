@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.cmp.backend.dto.DoctorRequest;
 import org.cmp.backend.dto.DoctorResponse;
+import org.cmp.backend.dto.DoctorSummaryResponse;
 import org.cmp.backend.dto.PageResponse;
 import org.cmp.backend.service.DoctorService;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @GetMapping
-    public ResponseEntity<PageResponse<DoctorResponse>> list(
+    public ResponseEntity<PageResponse<DoctorSummaryResponse>> list(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) UUID departmentId,
             @RequestParam(required = false) Boolean active,
