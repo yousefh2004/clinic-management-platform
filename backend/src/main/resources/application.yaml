@@ -28,4 +28,4 @@ app:
     access-token-expiration-ms: 3600000
     refresh-token-expiration-ms: 604800000
   admin:
-    default-password: ${ADMIN_DEFAULT_PASSWORD:YousefHajeer}
+    default-password: ${ADMIN_DEFAULT_PASSWORD:Admin@123!}
