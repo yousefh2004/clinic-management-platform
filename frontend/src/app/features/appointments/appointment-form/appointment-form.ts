@@ -13,7 +13,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
 import { DoctorService } from '../../../core/services/doctor.service';
 import { PatientService } from '../../../core/services/patient.service';
 import { DoctorSummary } from '../../../core/models/doctor.model';
-import { PatientResponse } from '../../../core/models/patient.model';
+import { PatientSummary } from '../../../core/models/patient.model';
 
 export interface AppointmentFormData {
   id: string | null;
@@ -39,7 +39,7 @@ export class AppointmentForm implements OnInit {
   doctorSearchControl = new FormControl('');
   patientSearchControl = new FormControl('');
   doctorOptions: DoctorSummary[] = [];
-  patientOptions: PatientResponse[] = [];
+  patientOptions: PatientSummary[] = [];
 
   selectedDoctorId: string | null = null;
   selectedPatientId: string | null = null;
@@ -90,7 +90,7 @@ export class AppointmentForm implements OnInit {
     return doctor ? `Dr. ${doctor.firstName} ${doctor.lastName}` : '';
   }
 
-  displayPatient(patient: PatientResponse): string {
+  displayPatient(patient: PatientSummary): string {
     return patient ? `${patient.firstName} ${patient.lastName}` : '';
   }
 
@@ -98,7 +98,7 @@ export class AppointmentForm implements OnInit {
     this.selectedDoctorId = doctor.id;
   }
 
-  onPatientSelected(patient: PatientResponse): void {
+  onPatientSelected(patient: PatientSummary): void {
     this.selectedPatientId = patient.id;
   }
 

@@ -6,11 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { PatientService } from '../../../core/services/patient.service';
-import { provideNativeDateAdapter } from '@angular/material/core';
-
+import { PatientResponse } from '../../../core/models/patient.model';
+import { AuditDatePipe } from '../../../shared/audit-date-pipe';
 
 export interface PatientFormData {
   id: string | null;
@@ -22,7 +22,7 @@ export interface PatientFormData {
   imports: [
     CommonModule, ReactiveFormsModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule,
-    MatDatepickerModule, MatNativeDateModule, MatDialogModule
+    MatDatepickerModule, MatDialogModule, AuditDatePipe
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './patient-form.html',
@@ -32,6 +32,7 @@ export interface PatientFormData {
 export class PatientForm implements OnInit {
   form: FormGroup;
   isEditMode: boolean;
+  patient: PatientResponse | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -54,6 +55,7 @@ export class PatientForm implements OnInit {
   ngOnInit(): void {
     if (this.isEditMode && this.data.id) {
       this.patientService.getById(this.data.id).subscribe((p) => {
+        this.patient = p;
         this.form.patchValue({
           firstName: p.firstName,
           lastName: p.lastName,
