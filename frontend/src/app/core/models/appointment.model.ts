@@ -1,13 +1,16 @@
 export type AppointmentStatus = 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
 
-export interface AppointmentResponse {
+export interface AppointmentSummary {
   id: string;
-  doctorId: string;
   doctorName: string;
-  patientId: string;
   patientName: string;
   appointmentDateTime: string;
   status: AppointmentStatus;
+}
+
+export interface AppointmentResponse extends AppointmentSummary {
+  doctorId: string;
+  patientId: string;
   createdAt: string;
   createdBy: string;
   updatedAt: string;

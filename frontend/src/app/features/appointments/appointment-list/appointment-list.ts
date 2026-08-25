@@ -13,7 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { AppointmentService } from '../../../core/services/appointment.service';
-import { AppointmentResponse, AppointmentStatus } from '../../../core/models/appointment.model';
+import { AppointmentStatus ,AppointmentSummary } from '../../../core/models/appointment.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { AppointmentForm, AppointmentFormData } from '../appointment-form/appointment-form';
 
@@ -33,7 +33,7 @@ import { AppointmentForm, AppointmentFormData } from '../appointment-form/appoin
 })
 export class AppointmentList implements OnInit {
   displayedColumns = ['doctor', 'patient', 'datetime', 'status', 'actions'];
-  appointments = signal<AppointmentResponse[]>([]);
+  appointments = signal<AppointmentSummary[]>([]);
   totalElements = signal(0);
   pageSize = 5;
   pageIndex = 0;
@@ -112,7 +112,7 @@ export class AppointmentList implements OnInit {
     });
   }
 
-  confirmCancel(appointment: AppointmentResponse): void {
+  confirmCancel(appointment: AppointmentSummary): void {
     const ref = this.dialog.open(ConfirmDialog, {
       data: {
         title: 'Cancel appointment',
@@ -127,7 +127,7 @@ export class AppointmentList implements OnInit {
     });
   }
 
-  markComplete(appointment: AppointmentResponse): void {
+  markComplete(appointment: AppointmentSummary): void {
     this.appointmentService.complete(appointment.id).subscribe(() => this.load());
   }
 }
