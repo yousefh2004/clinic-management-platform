@@ -5,9 +5,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  justify-content: safe center;
   padding: 30px 20px;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
 
 .page-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -16,12 +25,18 @@
     color: #ffffff;
     font-weight: 700;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    @media (max-width: 768px) {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
   }
 
 .login-card {
     display: flex;
     width: 100%;
-    height: 600px;
+    max-height: 90vh;
     max-width: 1020px;
     background-color: #a4a9d6;
     border-radius: 28px;
@@ -30,6 +45,8 @@
 
     @media (max-width: 768px) {
       flex-direction: column;
+      max-height: none;
+      border-radius: 20px;
     }
 }
 
@@ -41,6 +58,10 @@
     flex-direction: column;
     position: relative;
 
+    @media (max-width: 768px) {
+      padding: 24px 20px;
+    }
+
 .icon-badge {
     width: 44px;
     height: 44px;
@@ -50,6 +71,12 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 28px;
+
+    @media (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 16px;
+    }
 }
 
 .brand-slogan {
@@ -59,6 +86,12 @@
     color: rgba(255, 255, 255, 0.95);
     max-width: 270px;
     margin-bottom: 24px;
+
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+      max-width: none;
+    }
 }
 
 .illustration-container {
@@ -66,6 +99,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
 
 .steth-img {
     max-width: 325px;
@@ -89,12 +126,22 @@
   flex-direction: column;
   justify-content: space-between;
 
+  @media (max-width: 768px) {
+    padding: 28px 20px;
+    border-radius: 0;
+  }
+
 .form-heading {
     font-size: 1.5rem;
     font-weight: 700;
     color: #1e293b;
     text-align: center;
     margin-top: 10px;
+
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+      margin-top: 0;
+    }
 }
 
 .login-form {
@@ -102,6 +149,10 @@
   flex-direction: column;
   gap: 22px;
   margin-bottom: 90px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
 
 .full-width {
     width: 100%;
@@ -153,10 +204,18 @@
 
 .icon-image {
   width: 80px;
+
+  @media (max-width: 768px) {
+    width: 56px;
+  }
 }
 
 .login-image {
   margin: auto;
+
+  @media (max-width: 768px) {
+    width: 120px !important;
+  }
 }
 
 @keyframes floatSteth {
