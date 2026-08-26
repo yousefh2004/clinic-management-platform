@@ -136,6 +136,35 @@
   }
 }
 
+  .add-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 20px 8px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    border-radius: 12px;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      flex-shrink: 0;
+
+      span {
+        display: none;
+      }
+    }
+
+    &:hover {
+      color: #5D62D5;
+      background-color: #f1f2fa;
+    }
+  }
+
 .content {
   flex: 1;
   overflow-y: auto;

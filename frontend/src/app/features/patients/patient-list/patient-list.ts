@@ -14,6 +14,7 @@ import { PatientService } from '../../../core/services/patient.service';
 import { PatientSummary } from '../../../core/models/patient.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { PatientForm, PatientFormData } from '../patient-form/patient-form';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-patient-list',
@@ -45,9 +46,10 @@ export class PatientList implements OnInit {
   sortField = 'firstName';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(
+    constructor(
     private patientService: PatientService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

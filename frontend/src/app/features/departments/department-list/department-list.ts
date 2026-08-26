@@ -15,6 +15,7 @@ import { DepartmentResponse } from '../../../core/models/department.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { DepartmentForm, DepartmentFormData } from '../department-form/department-form';
 import { MatSortModule, Sort } from '@angular/material/sort';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-department-list',
@@ -51,10 +52,11 @@ onSortChange(sort: Sort): void {
   this.load();
 }
 
-  constructor(
+    constructor(
     private departmentService: DepartmentService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
