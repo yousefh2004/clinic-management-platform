@@ -51,11 +51,11 @@
 
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let p">
+           <td mat-cell *matCellDef="let p">
             <button mat-icon-button (click)="openEditDialog(p.id)">
               <mat-icon>edit</mat-icon>
             </button>
-            @if (p.active) {
+            @if (p.active && authService.currentUser()?.role === 'ADMIN') {
               <button mat-icon-button (click)="confirmDeactivate(p)">
                 <mat-icon>block</mat-icon>
               </button>

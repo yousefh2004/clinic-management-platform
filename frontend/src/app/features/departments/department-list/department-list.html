@@ -30,13 +30,15 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef ></th>
-        <td mat-cell *matCellDef="let dept">
+                <td mat-cell *matCellDef="let dept">
           <button mat-icon-button (click)="openEditDialog(dept.id)">
-  <mat-icon>edit</mat-icon>
-</button>
-          <button mat-icon-button (click)="confirmDelete(dept)">
-            <mat-icon>delete</mat-icon>
+            <mat-icon>edit</mat-icon>
           </button>
+          @if (authService.currentUser()?.role === 'ADMIN') {
+            <button mat-icon-button (click)="confirmDelete(dept)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
         </td>
       </ng-container>
 

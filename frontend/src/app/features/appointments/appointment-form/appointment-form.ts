@@ -63,13 +63,13 @@ export class AppointmentForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.doctorSearchControl.valueChanges.pipe(
-      debounceTime(300),
+      this.doctorSearchControl.valueChanges.pipe(
+      debounceTime(150),
       switchMap((name) => this.doctorService.searchByName(name || ''))
     ).subscribe((results) => this.doctorOptions = results);
 
     this.patientSearchControl.valueChanges.pipe(
-      debounceTime(300),
+      debounceTime(150),
       switchMap((name) => this.patientService.searchByName(name || ''))
     ).subscribe((results) => this.patientOptions = results);
 
@@ -138,6 +138,20 @@ export class AppointmentForm implements OnInit {
 
   onCancel(): void {
     this.dialogRef.close(false);
+  }
+
+    onDoctorFocus(): void {
+    if (this.doctorOptions.length === 0) {
+      this.doctorService.searchByName(this.doctorSearchControl.value || '')
+        .subscribe((results) => this.doctorOptions = results);
+    }
+  }
+
+  onPatientFocus(): void {
+    if (this.patientOptions.length === 0) {
+      this.patientService.searchByName(this.patientSearchControl.value || '')
+        .subscribe((results) => this.patientOptions = results);
+    }
   }
 
   private toTimeString(date: Date): string {

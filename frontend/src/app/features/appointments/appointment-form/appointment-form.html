@@ -4,9 +4,10 @@
 
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="appointment-form">
-    <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="fill" class="full-width">
       <mat-label>Doctor</mat-label>
-      <input matInput [formControl]="doctorSearchControl" [matAutocomplete]="doctorAuto" placeholder="Search by name">
+      <input matInput [formControl]="doctorSearchControl" [matAutocomplete]="doctorAuto"
+             (focus)="onDoctorFocus()" placeholder="Search by name">
       <mat-autocomplete #doctorAuto="matAutocomplete" [displayWith]="displayDoctor" (optionSelected)="onDoctorSelected($event.option.value)">
         @for (doc of doctorOptions; track doc.id) {
           <mat-option [value]="doc">Dr. {{ doc.firstName }} {{ doc.lastName }} — {{ doc.departmentName }}</mat-option>
@@ -16,7 +17,8 @@
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Patient</mat-label>
-      <input matInput [formControl]="patientSearchControl" [matAutocomplete]="patientAuto" placeholder="Search by name">
+      <input matInput [formControl]="patientSearchControl" [matAutocomplete]="patientAuto"
+             (focus)="onPatientFocus()" placeholder="Search by name">
       <mat-autocomplete #patientAuto="matAutocomplete" [displayWith]="displayPatient" (optionSelected)="onPatientSelected($event.option.value)">
         @for (p of patientOptions; track p.id) {
           <mat-option [value]="p">{{ p.firstName }} {{ p.lastName }} — {{ p.phoneNumber }}</mat-option>

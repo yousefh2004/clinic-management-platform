@@ -24,6 +24,13 @@
       </a>
     </nav>
 
+        @if (authService.currentUser()?.role === 'ADMIN') {
+      <button class="add-user-btn" (click)="openCreateUserDialog()">
+        <mat-icon>person_add</mat-icon>
+        <span>Add Staff User</span>
+      </button>
+    }
+
     <button class="logout-btn" (click)="authService.logout()">
       <mat-icon>logout</mat-icon>
       <span>Log out</span>

@@ -17,6 +17,7 @@ import { DoctorSummary } from '../../../core/models/doctor.model';
 import { DepartmentResponse } from '../../../core/models/department.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { DoctorForm, DoctorFormData } from '../doctor-form/doctor-form';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-doctor-list',
@@ -51,10 +52,11 @@ export class DoctorList implements OnInit {
   sortField = 'firstName';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(
+    constructor(
     private doctorService: DoctorService,
     private departmentService: DepartmentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
