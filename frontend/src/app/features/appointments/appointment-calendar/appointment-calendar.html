@@ -1,0 +1,33 @@
+<div class="scheduler-header">
+  <button mat-icon-button (click)="prev()">
+    <span class="material-icons">chevron_left</span>
+  </button>
+  <h2>{{ periodLabel }}</h2>
+  <button mat-icon-button (click)="next()">
+    <span class="material-icons">chevron_right</span>
+  </button>
+  <button mat-stroked-button class="today-btn" (click)="today()">Today</button>
+
+  <span class="spacer"></span>
+
+  <button mat-stroked-button [class.active]="viewDays === 1" (click)="setDayView()">Day</button>
+  <button mat-stroked-button [class.active]="viewDays === 7" (click)="setWeekView()">Week</button>
+</div>
+
+<calendar-scheduler-view
+  [viewDays]="viewDays"
+  [viewDate]="viewDate"
+  [events]="events"
+  [locale]="'en'"
+  [responsive]="true"
+  [startsWithToday]="true"
+  [hourSegments]="1"
+  [dayStartHour]="8"
+  [dayEndHour]="20"
+  [hourSegmentHeight]="70"
+  [showEventActions]="false"
+  [showSegmentHour]="true"
+  [zoomEventOnHover]="true"
+  [refresh]="refresh"
+  (eventClicked)="eventClicked($event.event)">
+</calendar-scheduler-view>

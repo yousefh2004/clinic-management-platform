@@ -16,6 +16,7 @@ import { AppointmentService } from '../../../core/services/appointment.service';
 import { AppointmentStatus ,AppointmentSummary } from '../../../core/models/appointment.model';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { AppointmentForm, AppointmentFormData } from '../appointment-form/appointment-form';
+import { AppointmentCalendar } from '../appointment-calendar/appointment-calendar';
 
 @Component({
   selector: 'app-appointment-list',
@@ -24,7 +25,8 @@ import { AppointmentForm, AppointmentFormData } from '../appointment-form/appoin
     CommonModule, FormsModule,
     MatTableModule, MatPaginatorModule, MatSortModule,
     MatFormFieldModule, MatSelectModule, MatButtonModule, MatIconModule,
-    MatDatepickerModule, MatInputModule
+    MatDatepickerModule, MatInputModule,
+    AppointmentCalendar
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './appointment-list.html',
@@ -37,6 +39,7 @@ export class AppointmentList implements OnInit {
   totalElements = signal(0);
   pageSize = 5;
   pageIndex = 0;
+  viewMode: 'list' | 'calendar' = 'list';
 
   fromDate: Date | null = null;
   toDate: Date | null = null;
@@ -52,6 +55,10 @@ export class AppointmentList implements OnInit {
 
   ngOnInit(): void {
     this.load();
+  }
+
+  setViewMode(mode: 'list' | 'calendar'): void {
+    this.viewMode = mode;
   }
 
   load(): void {

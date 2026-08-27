@@ -17,6 +17,7 @@ import { PatientSummary } from '../../../core/models/patient.model';
 import { AppointmentResponse } from '../../../core/models/appointment.model';
 import { AuditDatePipe } from '../../../shared/audit-date-pipe';
 
+
 export interface AppointmentFormData {
   id: string | null;
 }

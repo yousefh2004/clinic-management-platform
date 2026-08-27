@@ -183,3 +183,171 @@ mat-paginator {
     min-width: 800px;
   }
 }
+
+.toolbar {
+  flex-wrap: wrap;
+
+  .toolbar-actions {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+
+    @media (max-width: 600px) {
+      width: 100%;
+      margin-left: 0;
+      flex-direction: column;
+    }
+  }
+
+.view-toggle {
+  display: flex;
+  gap: 4px;
+
+  button {
+    width: 40px;
+    height: 40px;
+    min-width: 40px !important;
+    padding: 0 !important;
+    border: none !important;
+
+    .mat-icon {
+      margin: 0 !important;
+    }
+  }
+}
+
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .month-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1e293b;
+    min-width: 160px;
+    text-align: center;
+  }
+
+  .today-btn {
+    border-radius: 20px;
+    color: #5D62D5;
+    border-color: #5D62D5;
+    margin-left: 8px;
+  }
+}
+
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+
+  .weekday-cell {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    padding: 8px 0;
+  }
+}
+
+.calendar-grid {
+  .calendar-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+.day-cell {
+  background: #f8f9fc;
+  border-radius: 12px;
+  min-height: 90px;
+  padding: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+
+  &.other-month { opacity: 0.4; }
+
+  &.today .day-number {
+    background: #5D62D5;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 7px;
+  }
+
+  &.selected { border-color: #5D62D5; }
+
+  .day-number {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+}
+
+.appt-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.appt-chip {
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+
+  &.scheduled { background: #5D62D5; }
+  &.completed { background: #16a34a; }
+  &.cancelled { background: #94a3b8; text-decoration: line-through; }
+}
+
+.more-chip {
+  font-size: 0.65rem;
+  color: #64748b;
+}
+
+.day-detail {
+  margin-top: 16px;
+  background: #f8f9fc;
+  border-radius: 16px;
+  padding: 16px 20px;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #1e293b;
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f2fa;
+    cursor: pointer;
+
+    .time { font-weight: 600; width: 80px; }
+    .who { flex: 1; color: #475569; }
+    .status-badge {
+      font-size: 0.72rem;
+      padding: 2px 10px;
+      border-radius: 12px;
+      background: #f1f2fa;
+      color: #5D62D5;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .day-cell { min-height: 60px; }
+  .appt-chip { display: none; }
+}
