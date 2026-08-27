@@ -4,6 +4,8 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@import '../node_modules/angular-calendar/css/angular-calendar.css';
+@import '../node_modules/angular-calendar-scheduler/css/angular-calendar-scheduler.css';
 
 html {
   @include mat.theme((
@@ -25,4 +27,4 @@ html, body {
   border-top-left-radius: 50px !important;
   border-bottom-right-radius: 50px !important;
 }
-/* You can add global styles to this file, and also import other style files */
+

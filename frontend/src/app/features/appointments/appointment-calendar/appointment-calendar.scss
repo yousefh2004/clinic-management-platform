@@ -1,0 +1,50 @@
+.scheduler-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+  h2 {
+    margin: 0 8px;
+    font-size: 1.2rem;
+    color: #1e293b;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .today-btn, button[mat-stroked-button] {
+    border-radius: 20px;
+    color: #5D62D5;
+    border-color: #5D62D5;
+    margin-left: 6px;
+
+    &.active {
+      background: #5D62D5;
+      color: #ffffff;
+    }
+  }
+}
+
+calendar-scheduler-event {
+  display: block !important;
+  position: relative !important;
+}
+
+calendar-scheduler-event .cal-scheduler-event {
+  border-radius: 6px !important;
+  padding: 3px 6px !important;
+  overflow: hidden !important;
+}
+
+calendar-scheduler-event .cal-scheduler-event-title {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 600 !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}
+
